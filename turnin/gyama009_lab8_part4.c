@@ -19,9 +19,12 @@ void ADC_init(){
 int main(void) {
 	DDRA = 0x00; PORTA = 0xFF; // Set port A to input
 	DDRB = 0xFF; PORTB = 0x00; // Set port B to output
+	DDRD = 0xFF; PORTD = 0x00; // Set port D to output
 	ADC_init();
 	while (1) {
-		PORTB = (ADC >= 0x41) ? 0x01 : 0x00;
+		unsigned char x = ADC;
+		PORTB = ((x >= 18) << 0)+ ((x >= 36) << 1) + ((x >= 54) << 2) + ((x >= 72) << 3) + ((x >= 90) << 4) + ((x >= 108) << 5) + ((x >= 126) << 6) + ((x >= 144) << 7);
+		PORTD = ((x >= 162) << 0) + ((x >= 180) << 1);
 	}
 	return 0;
 }
